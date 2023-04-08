@@ -611,3 +611,360 @@ id - código do telefone a ser excluido
 
 ---
 
+
+### Cadastrar colaboradores
+
+`POST` /api/colaboradores
+
+| campo | tipo | obrigatório | descrição
+|-------|------|-------------|-----------
+| nome | string | sim | nome colaborador |
+| email | string | sim | email de envio da ata do colaborador |
+| cargo | string | sim | cargo do colaborador |
+**Exemplo de corpo de requisição**
+
+```json
+{
+    "nome": "Patricia",
+    "email": "patricia@speakeasy.com.br",
+    "cargo": "desenvolvedor back-end"
+}
+```
+
+**Exemplo de corpo de resposta**
+
+```json
+{
+    "id": 1,
+    "nome": "Patricia",
+    "email": "patricia@speakeasy.com.br",
+    "cargo": "desenvolvedor back-end"
+}
+
+```
+
+**Códigos de resposta**
+
+
+| codigo | descrição |
+|--------|-----------|
+| 201 | Indica que a requisição POST foi bem-sucedida e o servidor criou um novo recurso como resultado |
+| 400 | Indica que a requisição POST foi malformada ou inválida |
+| 401 | Indica que a requisição POST requer autenticação e o cliente não forneceu as credenciais corretas ou não possui autorização para acessar o recurso solicitado |
+| 403 | Indica que o cliente não possui permissão para acessar o recurso solicitado, mesmo que tenha fornecido autenticação correta |
+| 404 | Indica que o recurso solicitado na requisição POST não foi encontrado no servidor |
+| 500 | Indica que ocorreu um erro interno no servidor ao processar a requisição POST |
+
+---
+
+### Listar colaboradores
+`GET` /api/colaboradores
+
+**Exemplo de Corpo de resposta**
+
+```json
+[
+    {
+    "id": 1,
+    "nome": "Patricia",
+    "email": "patricia@speakeasy.com.br",
+    "cargo": "desenvolvedor back-end"
+    },
+    {
+    "id": 2,
+    "nome": "Gilberto",
+    "email": "gilberto@speakeasy.com.br",
+    "cargo": "desenvolvedor front-end"
+    }
+]
+
+```
+
+**Códigos de resposta**
+
+| codigo | descrição |
+|--------|-----------|
+| 200 | A requisição GET foi bem-sucedida e o servidor retornou os dados solicitados no corpo da resposta|
+| 400 | A requisição GET não pode ser processada devido a um erro no formato ou na sintaxe da requisição|
+| 401 | A requisição GET requer autenticação, mas as credenciais fornecidas não são válidas ou não foram fornecidas|
+| 403 | A requisição GET é proibida pelo servidor, geralmente porque o usuário não tem permissão para acessar o recurso solicitado|
+| 404 | O recurso solicitado na requisição GET não pode ser encontrado|
+| 500 | Ocorreu um erro interno do servidor ao processar a requisição GET|
+
+---
+
+### Detalhar colaborador
+`GET` /api/colaboradores/{id}
+  
+    
+    **Parâmetros de caminho**
+
+id - código do colaborador a ser detalhado
+
+**Exemplo de Corpo de resposta** 
+
+```json
+{
+    "id": 1,
+    "nome": "Patricia",
+    "email": "patricia@speakeasy.com.br",
+    "cargo": "desenvolvedor back-end"
+}
+
+```
+
+**Códigos de resposta**
+
+| codigo | descrição |
+|--------|-----------|
+| 200 | A requisição GET foi bem-sucedida e o servidor retornou os dados solicitados no corpo da resposta|
+| 400 | A requisição GET não pode ser processada devido a um erro no formato ou na sintaxe da requisição|
+| 401 | A requisição GET requer autenticação, mas as credenciais fornecidas não são válidas ou não foram fornecidas|
+| 403 | A requisição GET é proibida pelo servidor, geralmente porque o usuário não tem permissão para acessar o recurso solicitado|
+| 404 | O recurso solicitado na requisição GET não pode ser encontrado|
+| 500 | Ocorreu um erro interno do servidor ao processar a requisição GET|
+
+---
+
+### Alterar colaborador
+
+`PUT` /api/colaboradores/{id}
+
+        
+    **Parâmetros de caminho**
+
+id - código do colaborador a ser alterado
+    
+**Exemplo de corpo de requisição**
+
+```json
+
+{
+    "nome": "Patricia",
+    "email": "patricia@speakeasy.com.br",
+    "cargo": "Engenheira de dados"
+}
+
+
+```
+
+**Exemplo de corpo de resposta**
+
+```json
+{
+    "id": 1,
+    "nome": "Patricia",
+    "email": "patricia@speakeasy.com.br",
+    "cargo": "Engenheira de dados"
+}
+```
+
+**Códigos de resposta**
+
+| codigo | descrição |
+|--------|-----------|
+| 200 | A requisição PUT foi bem-sucedida e o recurso foi atualizado com sucesso|
+| 201 | A requisição PUT foi bem-sucedida e um novo recurso foi criado|
+| 400 | A requisição PUT não pode ser processada devido a um erro no formato ou na sintaxe da requisição|
+| 401 | A requisição PUT requer autenticação, mas as credenciais fornecidas não são válidas ou não foram fornecidas|
+| 403 | A requisição PUT é proibida pelo servidor, geralmente porque o usuário não tem permissão para atualizar o recurso|
+| 404 | O recurso que a requisição PUT está tentando atualizar não pode ser encontrado|
+| 500 | Ocorreu um erro interno do servidor ao processar a requisição PUT|
+
+---
+
+### Excluir colaborador
+
+`DELETE` /api/colaborador/{id}
+
+**Parâmetros de caminho**
+
+id - código do colaborador a ser excluido
+
+**Códigos de resposta**
+
+| codigo | descrição |
+|--------|-----------|
+| 200 | este código é usado para indicar que a requisição DELETE foi bem-sucedida e o recurso foi excluído com sucesso. |
+| 202 | este código é usado quando a requisição DELETE foi aceita pelo servidor, mas a exclusão do recurso ainda não foi concluída. Isso pode acontecer quando a exclusão leva algum tempo para ser concluída|
+| 400  | ste código é usado quando a requisição DELETE não pode ser processada devido a um erro no formato ou na sintaxe da requisição| 
+| 401  | este código é usado quando a requisição DELETE requer autenticação, mas as credenciais fornecidas não são válidas ou não foram fornecidas|
+| 404  | este código é usado quando o recurso que a requisição DELETE está tentando excluir não pode ser encontrado| 
+| 500  | este código é usado quando ocorre um erro interno do servidor ao processar a requisição DELETE|
+
+---
+
+### Cadastrar topicos
+
+`POST` /api/topicos
+
+| campo | tipo | obrigatório | descrição
+|-------|------|-------------|-----------
+| nome | string | sim | nome do tópico |
+| descricao | string | sim | descrição do tópico |
+
+**Exemplo de corpo de requisição**
+
+```json
+{
+    "nome": "Definição de tarefas e responsabilidades",
+    "descricao": "Com base nas discussões anteriores, a equipe definiu as tarefas e responsabilidades para as próximas semanas. Cada membro da equipe recebeu tarefas específicas e prazos para conclusão. João, o gerente de projeto, registrou as atribuições e os prazos em um documento compartilhado para acompanhamento.
+"
+}
+```
+
+**Exemplo de corpo de resposta**
+
+```json
+{
+    "id": 1,
+    "nome": "Definição de tarefas e responsabilidades",
+    "descricao": "Com base nas discussões anteriores, a equipe definiu as tarefas e responsabilidades para as próximas semanas. Cada membro da equipe recebeu tarefas específicas e prazos para conclusão. João, o gerente de projeto, registrou as atribuições e os prazos em um documento compartilhado para acompanhamento."
+}
+```
+
+**Códigos de resposta**
+
+
+
+| codigo | descrição |
+|--------|-----------|
+| 201 | Indica que a requisição POST foi bem-sucedida e o servidor criou um novo recurso como resultado |
+| 400 | Indica que a requisição POST foi malformada ou inválida |
+| 401 | Indica que a requisição POST requer autenticação e o cliente não forneceu as credenciais corretas ou não possui autorização para acessar o recurso solicitado |
+| 403 | Indica que o cliente não possui permissão para acessar o recurso solicitado, mesmo que tenha fornecido autenticação correta |
+| 404 | Indica que o recurso solicitado na requisição POST não foi encontrado no servidor |
+| 500 | Indica que ocorreu um erro interno no servidor ao processar a requisição POST |
+
+---
+
+### Listar topicos
+`GET` /api/topicos
+
+**Exemplo de Corpo de resposta**
+
+```json
+[
+    {
+    "id": 1,
+    "nome": "Definição de tarefas e responsabilidades",
+    "descricao": "Com base nas discussões anteriores, a equipe definiu as tarefas e responsabilidades para as próximas semanas. Cada membro da equipe recebeu tarefas específicas e prazos para conclusão. João, o gerente de projeto, registrou as atribuições e os prazos em um documento compartilhado para acompanhamento."
+    },
+    {
+    "id": 2,
+    "nome": "Planejamento das próximas etapas do projeto",
+    "descricao": "Carlos, o designer, compartilhou uma proposta de design atualizada e apresentou algumas ideias para melhorar a interface do usuário. Após uma discussão detalhada, a equipe concordou com as modificações propostas e definiu as próximas etapas do trabalho de design."
+    }
+]
+
+```
+
+**Códigos de resposta**
+
+| codigo | descrição |
+|--------|-----------|
+| 200 | A requisição GET foi bem-sucedida e o servidor retornou os dados solicitados no corpo da resposta|
+| 400 | A requisição GET não pode ser processada devido a um erro no formato ou na sintaxe da requisição|
+| 401 | A requisição GET requer autenticação, mas as credenciais fornecidas não são válidas ou não foram fornecidas|
+| 403 | A requisição GET é proibida pelo servidor, geralmente porque o usuário não tem permissão para acessar o recurso solicitado|
+| 404 | O recurso solicitado na requisição GET não pode ser encontrado|
+| 500 | Ocorreu um erro interno do servidor ao processar a requisição GET|
+
+---
+
+### Detalhar topico
+
+`GET` /api/topicos/{id}
+  
+    
+    **Parâmetros de caminho**
+
+id - código do topico a ser detalhado
+
+**Exemplo de Corpo de resposta** 
+
+```json
+{
+    "id": 1,
+    "nome": "Definição de tarefas e responsabilidades",
+    "descricao": "Com base nas discussões anteriores, a equipe definiu as tarefas e responsabilidades para as próximas semanas. Cada membro da equipe recebeu tarefas específicas e prazos para conclusão. João, o gerente de projeto, registrou as atribuições e os prazos em um documento compartilhado para acompanhamento."
+}
+
+```
+
+**Códigos de resposta**
+
+| codigo | descrição |
+|--------|-----------|
+| 200 | A requisição GET foi bem-sucedida e o servidor retornou os dados solicitados no corpo da resposta|
+| 400 | A requisição GET não pode ser processada devido a um erro no formato ou na sintaxe da requisição|
+| 401 | A requisição GET requer autenticação, mas as credenciais fornecidas não são válidas ou não foram fornecidas|
+| 403 | A requisição GET é proibida pelo servidor, geralmente porque o usuário não tem permissão para acessar o recurso solicitado|
+| 404 | O recurso solicitado na requisição GET não pode ser encontrado|
+| 500 | Ocorreu um erro interno do servidor ao processar a requisição GET|
+
+---
+
+### Alterar topico
+
+`PUT` /api/topicos/{id}
+
+        
+    **Parâmetros de caminho**
+
+id - código do topico a ser alterado
+    
+**Exemplo de corpo de requisição**
+
+```json
+
+{
+    "nome": "Discussão sobre o andamento do projeto",
+    "descricao": "Maria, a desenvolvedora, apresentou um relatório sobre o andamento do projeto, destacando os marcos alcançados e os desafios enfrentados. Foram discutidos os principais obstáculos e possíveis soluções para manter o projeto dentro do cronograma."
+}
+
+
+```
+
+**Exemplo de corpo de resposta**
+
+```json
+
+{
+    "nome": "Discussão sobre o andamento do projeto",
+    "descricao": "Maria, a desenvolvedora, apresentou um relatório sobre o andamento do projeto, destacando os marcos alcançados e os desafios enfrentados. Foram discutidos os principais obstáculos e possíveis soluções para manter o projeto dentro do cronograma."
+}
+```
+
+**Códigos de resposta**
+
+| codigo | descrição |
+|--------|-----------|
+| 200 | A requisição PUT foi bem-sucedida e o recurso foi atualizado com sucesso|
+| 201 | A requisição PUT foi bem-sucedida e um novo recurso foi criado|
+| 400 | A requisição PUT não pode ser processada devido a um erro no formato ou na sintaxe da requisição|
+| 401 | A requisição PUT requer autenticação, mas as credenciais fornecidas não são válidas ou não foram fornecidas|
+| 403 | A requisição PUT é proibida pelo servidor, geralmente porque o usuário não tem permissão para atualizar o recurso|
+| 404 | O recurso que a requisição PUT está tentando atualizar não pode ser encontrado|
+| 500 | Ocorreu um erro interno do servidor ao processar a requisição PUT|
+
+---
+
+### Excluir topicos
+
+`DELETE` /api/topicos/{id}
+
+**Parâmetros de caminho**
+
+id - código do topico a ser excluido
+
+**Códigos de resposta**
+
+| codigo | descrição |
+|--------|-----------|
+| 200 | este código é usado para indicar que a requisição DELETE foi bem-sucedida e o recurso foi excluído com sucesso. |
+| 202 | este código é usado quando a requisição DELETE foi aceita pelo servidor, mas a exclusão do recurso ainda não foi concluída. Isso pode acontecer quando a exclusão leva algum tempo para ser concluída|
+| 400  | ste código é usado quando a requisição DELETE não pode ser processada devido a um erro no formato ou na sintaxe da requisição| 
+| 401  | este código é usado quando a requisição DELETE requer autenticação, mas as credenciais fornecidas não são válidas ou não foram fornecidas|
+| 404  | este código é usado quando o recurso que a requisição DELETE está tentando excluir não pode ser encontrado| 
+| 500  | este código é usado quando ocorre um erro interno do servidor ao processar a requisição DELETE|
