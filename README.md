@@ -67,7 +67,7 @@ Nesta documentação, você encontrará informações detalhadas sobre as rotas 
 
 
 
-| codigo | descricao |
+| codigo | descrição |
 |--------|-----------|
 | 201 | Indica que a requisição POST foi bem-sucedida e o servidor criou um novo recurso como resultado |
 | 400 | Indica que a requisição POST foi malformada ou inválida |
@@ -106,7 +106,7 @@ Nesta documentação, você encontrará informações detalhadas sobre as rotas 
 
 **Códigos de resposta**
 
-| codigo | descricao |
+| codigo | descrição |
 |--------|-----------|
 | 200 | A requisição GET foi bem-sucedida e o servidor retornou os dados solicitados no corpo da resposta|
 | 400 | A requisição GET não pode ser processada devido a um erro no formato ou na sintaxe da requisição|
@@ -141,7 +141,7 @@ id - código do usuario a ser detalhado
 
 **Códigos de resposta**
 
-| codigo | descricao |
+| codigo | descrição |
 |--------|-----------|
 | 200 | A requisição GET foi bem-sucedida e o servidor retornou os dados solicitados no corpo da resposta|
 | 400 | A requisição GET não pode ser processada devido a um erro no formato ou na sintaxe da requisição|
@@ -188,7 +188,7 @@ id - código do usuario a ser alterado
 
 **Códigos de resposta**
 
-| codigo | descricao |
+| codigo | descrição |
 |--------|-----------|
 | 200 | A requisição PUT foi bem-sucedida e o recurso foi atualizado com sucesso|
 | 201 | A requisição PUT foi bem-sucedida e um novo recurso foi criado|
@@ -210,7 +210,7 @@ id - código do usuario a ser excluido
 
 **Códigos de resposta**
 
-| codigo | descricao |
+| codigo | descrição |
 |--------|-----------|
 | 200 | este código é usado para indicar que a requisição DELETE foi bem-sucedida e o recurso foi excluído com sucesso. |
 | 202 | este código é usado quando a requisição DELETE foi aceita pelo servidor, mas a exclusão do recurso ainda não foi concluída. Isso pode acontecer quando a exclusão leva algum tempo para ser concluída|
@@ -225,7 +225,7 @@ id - código do usuario a ser excluido
 
 `POST` /api/reuniao
 
-| campo | tipo | obrigatório | descricao
+| campo | tipo | obrigatório | descrição
 |-------|------|:-------------:|----------
 | titulo | string | sim | título do video para identificação do próprio usuário|
 | descricao | string | nao | descrição da reunião preenchida pelo próprio sistema |
@@ -263,7 +263,7 @@ id - código do usuario a ser excluido
 **Códigos de resposta**
 
 
-| codigo | descricao |
+| codigo | descrição |
 |--------|-----------|
 | 201 | Indica que a requisição POST foi bem-sucedida e o servidor criou um novo recurso como resultado |
 | 400 | Indica que a requisição POST foi malformada ou inválida |
@@ -303,7 +303,7 @@ id - código do usuario a ser excluido
 
 **Códigos de resposta**
 
-| codigo | descricao |
+| codigo | descrição |
 |--------|-----------|
 | 200 | A requisição GET foi bem-sucedida e o servidor retornou os dados solicitados no corpo da resposta|
 | 400 | A requisição GET não pode ser processada devido a um erro no formato ou na sintaxe da requisição|
@@ -341,7 +341,7 @@ id - código da reunião a ser detalhada
 
 **Códigos de resposta**
 
-| codigo | descricao |
+| codigo | descrição |
 |--------|-----------|
 | 200 | A requisição GET foi bem-sucedida e o servidor retornou os dados solicitados no corpo da resposta|
 | 400 | A requisição GET não pode ser processada devido a um erro no formato ou na sintaxe da requisição|
@@ -391,7 +391,7 @@ id - código do reuniões a ser alterado
 
 **Códigos de resposta**
 
-| codigo | descricao |
+| codigo | descrição |
 |--------|-----------|
 | 200 | A requisição PUT foi bem-sucedida e o recurso foi atualizado com sucesso|
 | 201 | A requisição PUT foi bem-sucedida e um novo recurso foi criado|
@@ -413,7 +413,7 @@ id - código da reunião a ser excluida
 
 **Códigos de resposta**
 
-| codigo | descricao |
+| codigo | descrição |
 |--------|-----------|
 | 200 | este código é usado para indicar que a requisição DELETE foi bem-sucedida e o recurso foi excluído com sucesso. |
 | 202 | este código é usado quando a requisição DELETE foi aceita pelo servidor, mas a exclusão do recurso ainda não foi concluída. Isso pode acontecer quando a exclusão leva algum tempo para ser concluída|
@@ -430,7 +430,7 @@ id - código da reunião a ser excluida
 
 `POST` /api/telefone
 
-| campo | tipo | obrigatório | descricao
+| campo | tipo | obrigatório | descrição
 |-------|------|:-------------:|----------
 | numeroDDD | int | sim | número do DDD do telefone do usuário|
 | numeroDDI | int | sim | número do DDD do telefone do usuário |
@@ -463,7 +463,7 @@ id - código da reunião a ser excluida
 **Códigos de resposta**
 
 
-| codigo | descricao |
+| codigo | descrição |
 |--------|-----------|
 | 201 | Indica que a requisição POST foi bem-sucedida e o servidor criou um novo recurso como resultado |
 | 400 | Indica que a requisição POST foi malformada ou inválida |
@@ -499,7 +499,7 @@ id - código da reunião a ser excluida
 
 **Códigos de resposta**
 
-| codigo | descricao |
+| codigo | descrição |
 |--------|-----------|
 | 200 | A requisição GET foi bem-sucedida e o servidor retornou os dados solicitados no corpo da resposta|
 | 400 | A requisição GET não pode ser processada devido a um erro no formato ou na sintaxe da requisição|
@@ -532,7 +532,7 @@ id - código do telefone a ser detalhado
 
 **Códigos de resposta**
 
-| codigo | descricao |
+| codigo | descrição |
 |--------|-----------|
 | 200 | A requisição GET foi bem-sucedida e o servidor retornou os dados solicitados no corpo da resposta|
 | 400 | A requisição GET não pode ser processada devido a um erro no formato ou na sintaxe da requisição|
@@ -578,7 +578,7 @@ id - código do telefone a ser alterado
 
 **Códigos de resposta**
 
-| codigo | descricao |
+| codigo | descrição |
 |--------|-----------|
 | 200 | A requisição PUT foi bem-sucedida e o recurso foi atualizado com sucesso|
 | 201 | A requisição PUT foi bem-sucedida e um novo recurso foi criado|
@@ -600,7 +600,7 @@ id - código do telefone a ser excluido
 
 **Códigos de resposta**
 
-| codigo | descricao |
+| codigo | descrição |
 |--------|-----------|
 | 200 | este código é usado para indicar que a requisição DELETE foi bem-sucedida e o recurso foi excluído com sucesso. |
 | 202 | este código é usado quando a requisição DELETE foi aceita pelo servidor, mas a exclusão do recurso ainda não foi concluída. Isso pode acontecer quando a exclusão leva algum tempo para ser concluída|
