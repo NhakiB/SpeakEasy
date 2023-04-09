@@ -29,7 +29,6 @@ Nesta documentação, você encontrará informações detalhadas sobre as rotas 
 
 - Telefone
     - [Cadastrar](#cadastrar-telefone)
-    - [Listar](#listar-telefones)
     - [Detalhar](#detalhar-telefone)
     - [Alterar](#alterar-telefone)
     - [Excluir](#excluir-telefone)
@@ -37,13 +36,11 @@ Nesta documentação, você encontrará informações detalhadas sobre as rotas 
 - Colaborador
     - [Cadastrar](#cadastrar-colaborador)
     - [Listar](#listar-colaboradores)
-    - [Detalhar](#detalhar-colaborador)
     - [Excluir](#excluir-colaborador)
 
 - Topicos
     - [Cadastrar](#cadastrar-topico)
     - [Listar](#listar-topicos)
-    - [Detalhar](#detalhar-topico)
     - [Alterar](#alterar-topico)
     - [Excluir](#excluir-topico)
 
@@ -472,39 +469,6 @@ id - código da reunião a ser excluida
 
 ---
 
-### Listar telefones
-`GET` /api/telefones
-
-**Exemplo de Corpo de resposta**
-
-```json
-[
-    {
-        "id": 1,
-        "numeroDDD": 11,
-        "numeroDDI": 55,
-        "nrTelefone": 987654321
-    },
-    {
-        "id": 2,
-        "numeroDDD": 21,
-        "numeroDDI": 1,
-        "nrTelefone": 123456789
-    }
-]
-
-```
-
-**Códigos de resposta**
-
-| codigo | descrição |
-|--------|-----------|
-| 200 | A requisição GET foi bem-sucedida e o servidor retornou os dados solicitados no corpo da resposta|
-| 404 | O recurso solicitado na requisição GET não pode ser encontrado|
-| 500 | Ocorreu um erro interno do servidor ao processar a requisição GET|
-
----
-
 ### Detalhar telefone
 `GET` /api/telefones/{id}
   
@@ -680,38 +644,6 @@ id - código do telefone a ser excluido
 
 ---
 
-### Detalhar colaborador
-`GET` /api/colaboradores/{id}
-  
-    
-    **Parâmetros de caminho**
-
-id - código do colaborador a ser detalhado
-
-**Exemplo de Corpo de resposta** 
-
-```json
-{
-    "id": 1,
-    "nome": "Patricia",
-    "email": "patricia@speakeasy.com.br",
-    "cargo": "desenvolvedor back-end",
-    "status": "A"
-}
-
-```
-
-**Códigos de resposta**
-
-| codigo | descrição |
-|--------|-----------|
-| 200 | A requisição GET foi bem-sucedida e o servidor retornou os dados solicitados no corpo da resposta|
-| 404 | O recurso solicitado na requisição GET não pode ser encontrado|
-| 500 | Ocorreu um erro interno do servidor ao processar a requisição GET|
-
-
----
-
 ### Excluir colaborador
 
 `DELETE` /api/colaborador/{id}
@@ -789,36 +721,6 @@ id - código do colaborador a ser excluido
     "descricao": "Carlos, o designer, compartilhou uma proposta de design atualizada e apresentou algumas ideias para melhorar a interface do usuário. Após uma discussão detalhada, a equipe concordou com as modificações propostas e definiu as próximas etapas do trabalho de design."
     }
 ]
-
-```
-
-**Códigos de resposta**
-
-| codigo | descrição |
-|--------|-----------|
-| 200 | A requisição GET foi bem-sucedida e o servidor retornou os dados solicitados no corpo da resposta|
-| 404 | O recurso solicitado na requisição GET não pode ser encontrado|
-| 500 | Ocorreu um erro interno do servidor ao processar a requisição GET|
-
----
-
-### Detalhar topico
-
-`GET` /api/topicos/{id}
-  
-    
-    **Parâmetros de caminho**
-
-id - código do topico a ser detalhado
-
-**Exemplo de Corpo de resposta** 
-
-```json
-{
-    "id": 1,
-    "nome": "Definição de tarefas e responsabilidades",
-    "descricao": "Com base nas discussões anteriores, a equipe definiu as tarefas e responsabilidades para as próximas semanas. Cada membro da equipe recebeu tarefas específicas e prazos para conclusão. João, o gerente de projeto, registrou as atribuições e os prazos em um documento compartilhado para acompanhamento."
-}
 
 ```
 
