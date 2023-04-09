@@ -138,7 +138,7 @@ Nesta documentação, você encontrará informações detalhadas sobre as rotas 
 `GET` /api/usuarios/{id}
   
     
-    **Parâmetros de caminho**
+**Parâmetros de caminho**
 
 id - código do usuario a ser detalhado
 
@@ -171,7 +171,7 @@ id - código do usuario a ser detalhado
 `PUT` /api/usuarios/{id}
 
         
-    **Parâmetros de caminho**
+**Parâmetros de caminho**
 
 id - código do usuario a ser alterado
     
@@ -325,7 +325,7 @@ id - código do usuario a ser excluido
 `GET` /api/reunioes/{id}
   
     
-    **Parâmetros de caminho**
+**Parâmetros de caminho**
 
 id - código da reunião a ser detalhada
 
@@ -362,7 +362,7 @@ id - código da reunião a ser detalhada
 `PUT` /api/reunioes/{id}
 
         
-    **Parâmetros de caminho**
+**Parâmetros de caminho**
 
 id - código do reuniões a ser alterado
     
@@ -473,7 +473,7 @@ id - código da reunião a ser excluida
 `GET` /api/telefones/{id}
   
     
-    **Parâmetros de caminho**
+**Parâmetros de caminho**
 
 id - código do telefone a ser detalhado
 
@@ -504,7 +504,7 @@ id - código do telefone a ser detalhado
 `PUT` /api/telefones/{id}
 
         
-    **Parâmetros de caminho**
+**Parâmetros de caminho**
 
 id - código do telefone a ser alterado
     
@@ -739,7 +739,7 @@ id - código do colaborador a ser excluido
 `PUT` /api/topicos/{id}
 
         
-    **Parâmetros de caminho**
+**Parâmetros de caminho**
 
 id - código do topico a ser alterado
     
@@ -867,7 +867,7 @@ id - código do topico a ser excluido
 `GET` /api/categorias/{id}
   
     
-    **Parâmetros de caminho**
+**Parâmetros de caminho**
 
 id - código do categorias a ser detalhado
 
