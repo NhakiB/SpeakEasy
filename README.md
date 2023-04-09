@@ -6,11 +6,11 @@ Nesta documentação, você encontrará informações detalhadas sobre as rotas 
 
 ## Contribuidores
 
-- Caio Henrique Martins(#https://github.com/Caiohrqm)
-- Felipe Miguel Ortega(#https://github.com/Felipe-Miguel)
-- Gabriela Vieira(#https://github.com/vieiragab)
-- Isadora Antunes(#https://github.com/NhakiB)
-- Maria Eduarda Herrera(#https://github.com/herrera3)
+- Caio Henrique Martins(https://github.com/Caiohrqm)
+- Felipe Miguel Ortega(https://github.com/Felipe-Miguel)
+- Gabriela Vieira(https://github.com/vieiragab)
+- Isadora Antunes(https://github.com/NhakiB)
+- Maria Eduarda Herrera(https://github.com/herrera3)
 
 ## Endpoints
 - Usuario
