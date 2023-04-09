@@ -229,7 +229,7 @@ id - código do usuario a ser excluido
 
 ### Cadastrar reuniao
 
-`POST` /api/reuniao
+`POST` /api/reunioes
 
 | campo | tipo | obrigatório | descrição
 |-------|------|:-------------:|----------
@@ -281,7 +281,7 @@ id - código do usuario a ser excluido
 ---
 
 ### Listar reuniões
-`GET` /api/reuniões
+`GET` /api/reunioes
 
 **Exemplo de Corpo de resposta**
 
