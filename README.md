@@ -27,6 +27,27 @@ Nesta documentação, você encontrará informações detalhadas sobre as rotas 
     - [Alterar]
     - [Excluir]
 
+- Telefone
+    - [Cadastrar]
+    - [Listar]
+    - [Detalhar]
+    - [Alterar]
+    - [Excluir]
+
+- Colaboradores
+    - [Cadastrar]
+    - [Listar]
+    - [Detalhar]
+    - [Excluir]
+
+- Topicos
+    - [Cadastrar]
+    - [Listar]
+    - [Detalhar]
+    - [Alterar]
+    - [Excluir]
+
+
 ### Cadastrar usuario
 
 `POST` /api/usuarios
@@ -724,52 +745,6 @@ id - código do colaborador a ser detalhado
 | 404 | O recurso solicitado na requisição GET não pode ser encontrado|
 | 500 | Ocorreu um erro interno do servidor ao processar a requisição GET|
 
----
-
-### Alterar colaborador
-
-`PUT` /api/colaboradores/{id}
-
-        
-    **Parâmetros de caminho**
-
-id - código do colaborador a ser alterado
-    
-**Exemplo de corpo de requisição**
-
-```json
-
-{
-    "nome": "Patricia",
-    "email": "patricia@speakeasy.com.br",
-    "cargo": "Engenheira de dados"
-}
-
-
-```
-
-**Exemplo de corpo de resposta**
-
-```json
-{
-    "id": 1,
-    "nome": "Patricia",
-    "email": "patricia@speakeasy.com.br",
-    "cargo": "Engenheira de dados"
-}
-```
-
-**Códigos de resposta**
-
-| codigo | descrição |
-|--------|-----------|
-| 200 | A requisição PUT foi bem-sucedida e o recurso foi atualizado com sucesso|
-| 201 | A requisição PUT foi bem-sucedida e um novo recurso foi criado|
-| 400 | A requisição PUT não pode ser processada devido a um erro no formato ou na sintaxe da requisição|
-| 401 | A requisição PUT requer autenticação, mas as credenciais fornecidas não são válidas ou não foram fornecidas|
-| 403 | A requisição PUT é proibida pelo servidor, geralmente porque o usuário não tem permissão para atualizar o recurso|
-| 404 | O recurso que a requisição PUT está tentando atualizar não pode ser encontrado|
-| 500 | Ocorreu um erro interno do servidor ao processar a requisição PUT|
 
 ---
 
@@ -968,3 +943,4 @@ id - código do topico a ser excluido
 | 401  | este código é usado quando a requisição DELETE requer autenticação, mas as credenciais fornecidas não são válidas ou não foram fornecidas|
 | 404  | este código é usado quando o recurso que a requisição DELETE está tentando excluir não pode ser encontrado| 
 | 500  | este código é usado quando ocorre um erro interno do servidor ao processar a requisição DELETE|
+
