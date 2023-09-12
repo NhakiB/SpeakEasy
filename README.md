@@ -35,7 +35,7 @@ Para instalar este projeto em sua máquina local, siga estas etapas:
 # Documentação
 
 
-## Contribuidores
+Contribuidores
 
 - [Caio Henrique Martins](https://github.com/Caiohrqm)
 - [Felipe Miguel Ortega](https://github.com/Felipe-Miguel)
