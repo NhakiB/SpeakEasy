@@ -1,0 +1,111 @@
+## Tabela "Usuário"
+
+## Inserção (Create)
+
+{
+    "method": "POST",
+    "url": "/api/usuarios",
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "body": {
+        "DS_EMAIL": "novo_usuario@example.com",
+        "DS_SENHA": "nova_senha123",
+        "NM_USUARIO": "Novo Usuário",
+        "DS_PAIS": "Brasil"
+    }
+}
+
+## Leitura (Read)
+
+{
+    "method": "GET",
+    "url": "/api/usuarios/1"
+}
+
+## Atualização (Update)
+
+{
+    "method": "PUT",
+    "url": "/api/usuarios/1",
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "body": {
+        "NM_USUARIO": "Novo Nome do Usuário",
+        "DS_PAIS": "Estados Unidos"
+    }
+}
+
+## Exclusão (Delete)
+
+{
+    "method": "DELETE",
+    "url": "/api/usuarios/5"
+}
+
+
+---
+
+## Tabela "Reunião"
+
+## Inserção (Create)
+
+{
+    "method": "POST",
+    "url": "/api/reunioes",
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "body": {
+        "ID_USUARIO": 1,
+        "ID_CATEGORIA": 1,
+        "DS_TITULO": "Nova Reunião",
+        "DS_DESCRICAO": "Esta é uma nova reunião",
+        "DT_DURACAO": "PT1H30M",
+        "DT_REUNIAO": "2023-09-20T15:00:00Z",
+        "DS_AUDIO": null
+    }
+}
+
+
+## Leitura (Read)
+
+{
+    "method": "GET",
+    "url": "/api/reunioes/1"
+}
+
+
+## Atualização (Update)
+
+{
+    "method": "PUT",
+    "url": "/api/reunioes/1",
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "body": {
+        "DS_TITULO": "Novo Título da Reunião",
+        "DS_DESCRICAO": "Esta é uma reunião atualizada"
+    }
+}
+
+
+## Exclusão (Delete)
+
+{
+    "method": "DELETE",
+    "url": "/api/reunioes/3"
+}
+
+
+
+
+
+
+
+
+
+
+
