@@ -9,10 +9,10 @@
         "Content-Type": "application/json"
     },
     "body": {
-        "DS_EMAIL": "novo_usuario@example.com",
-        "DS_SENHA": "nova_senha123",
-        "NM_USUARIO": "Novo Usuário",
-        "DS_PAIS": "Brasil"
+        "DS_EMAIL": "rm88033@fiap.com.br",
+        "DS_SENHA": "090803",
+        "NM_USUARIO": "Gabi",
+        "DS_PAIS": "EUA"
     }
 }
 
@@ -32,8 +32,8 @@
         "Content-Type": "application/json"
     },
     "body": {
-        "NM_USUARIO": "Novo Nome do Usuário",
-        "DS_PAIS": "Estados Unidos"
+        "NM_USUARIO": "Gabriella",
+        "DS_PAIS": "Brasil"
     }
 }
 
@@ -60,8 +60,8 @@
     "body": {
         "ID_USUARIO": 1,
         "ID_CATEGORIA": 1,
-        "DS_TITULO": "Nova Reunião",
-        "DS_DESCRICAO": "Esta é uma nova reunião",
+        "DS_TITULO": "Reunião Quinta",
+        "DS_DESCRICAO": "Reunião sobre a entrega final",
         "DT_DURACAO": "PT1H30M",
         "DT_REUNIAO": "2023-09-20T15:00:00Z",
         "DS_AUDIO": null
@@ -86,8 +86,8 @@
         "Content-Type": "application/json"
     },
     "body": {
-        "DS_TITULO": "Novo Título da Reunião",
-        "DS_DESCRICAO": "Esta é uma reunião atualizada"
+        "DS_TITULO": "Terceira reunião",
+        "DS_DESCRICAO": "Essa reunião foi sobre a penultima entrega"
     }
 }
 
