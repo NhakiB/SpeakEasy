@@ -17,11 +17,11 @@ Para instalar este projeto em sua máquina local, siga estas etapas:
 
 1. Clone o repositório:
 
-   git clone https://github.com/DevallOficial/SpeakEasy
+   git clone https://github.com/DevallOficial
 
 2. Navegue até o diretório do projeto:
 
-    cd seu-projeto
+    cd SpeakEasy
 
 3. Compile o projeto usando o Maven:
 
