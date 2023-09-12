@@ -1,7 +1,7 @@
-package com.config;
+package coma.config;
 
-import com.models.Telefone;
-import com.repository.TelefoneRepository;
+import coma.models.Telefone;
+import coma.repository.TelefoneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

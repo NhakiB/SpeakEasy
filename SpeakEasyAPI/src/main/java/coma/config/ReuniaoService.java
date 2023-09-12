@@ -1,11 +1,10 @@
-package com.config;
+package coma.config;
 
 import java.time.ZonedDateTime;
 
+import coma.models.Reuniao;
+import coma.repository.ReuniaoRepository;
 import org.springframework.stereotype.Service;
-
-import com.models.Reuniao;
-import com.repository.ReuniaoRepository;
 
 @Service
 public class ReuniaoService {

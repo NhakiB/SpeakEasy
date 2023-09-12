@@ -1,11 +1,12 @@
-package com.models;
+package coma.models;
 
-import java.time.ZonedDateTime;
-    
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,26 +15,27 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 
-public class Reuniao {
-    
+public class Usuario {
+
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    private String titulo;
+    @Email
+    @NotBlank(message = "Insira um email válido")
+    private String email;
 
-    private String descricao;
-
-    @NotBlank
-    private String duracao;
-
-    @NotBlank
-    private ZonedDateTime data;
-
-    private ZonedDateTime dataAlteracao;
+    @NotBlank(message = "Insira uma senha válida")
+    private String senha;
 
     @NotBlank
-    private Byte audio;
+    private String nome;
+
+    @NotBlank
+    private String pais;
+
+    @JsonIgnore
+    private boolean ativo = true;
 
     
 }

@@ -1,14 +1,14 @@
-package com.config;
+package coma.config;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import coma.models.RestValidationError;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import com.models.RestValidationError;
 
 public class RestExceptionHandler {
     

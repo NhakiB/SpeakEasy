@@ -1,9 +1,8 @@
-package com.config;
+package coma.config;
 
+import coma.models.Usuario;
+import coma.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
-
-import com.models.Usuario;
-import com.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {

@@ -1,23 +1,23 @@
 import azure.cognitiveservices.speech as speechsdk
 import openai
-
+import os
 
 def transcrever_fala():
     
-    chave_assinatura = 'YOUR_API?_KEY'
+    chave_assinatura = 'c2698082b28e46fba8234b3d6e567eb5'
     regiao = 'brazilsouth'
 
     
     config = speechsdk.SpeechConfig(subscription=chave_assinatura, region=regiao)
 
-    
     speech_recognizer = speechsdk.SpeechRecognizer(speech_config=config, language='pt-BR')
 
     print("Fale algo...")
 
+    # Iniciar o reconhecimento de fala
     result = speech_recognizer.recognize_once()
 
-    
+    # Verificar se o reconhecimento foi bem-sucedido
     if result.reason == speechsdk.ResultReason.RecognizedSpeech:
         texto = result.text
         print("Texto capturado:", texto)
@@ -33,7 +33,7 @@ def transcrever_fala():
         return None
 
 def resumir_texto(texto):
-    openai.api_key = 'YOUR_API?_KEY'
+    openai.api_key = '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'
 
     response = openai.Completion.create(
         model="text-davinci-003",

@@ -1,7 +1,7 @@
-package com.repository;
+package coma.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.models.Telefone;
+import coma.models.Telefone;
 
 public interface TelefoneRepository extends JpaRepository<Telefone, Long>{
  
