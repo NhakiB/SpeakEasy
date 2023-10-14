@@ -1,0 +1,13 @@
+package coma;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SpeakEasyApiApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpeakEasyApiApplication.class, args);
+	}
+
+}
