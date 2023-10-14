@@ -1,10 +1,12 @@
+import os
+
 import azure.cognitiveservices.speech as speechsdk
 import openai
-import os
+
 
 def transcrever_fala():
     
-    chave_assinatura = 'c2698082b28e46fba8234b3d6e567eb5'
+    chave_assinatura = ''
     regiao = 'brazilsouth'
 
     
@@ -25,30 +27,35 @@ def transcrever_fala():
 
     elif result.reason == speechsdk.ResultReason.NoMatch:
         print("Não foi possível reconhecer o áudio")
-        return None
+        return ""
 
     elif result.reason == speechsdk.ResultReason.Canceled:
         cancellation_details = result.cancellation_details
-        print("Reconhecimento cancelado. Motivo:", cancellation_details.reason)
-        return None
+        print("Reconhecimento cancelado. Motivo:", cancellation_details)
+        return ""
 
 def resumir_texto(texto):
-    openai.api_key = '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'
+    openai.api_key = ''
+    try:
+        response = openai.Completion.create(
+            model="text-davinci-003",
+            prompt="Resuma essa reunião com os pontos principais, dê um titulo e se necessário utilize tópicos e descarte conversas paralelas: " + texto,
+            temperature=0.7,
+            max_tokens=100,
+            top_p=1.0,
+            frequency_penalty=0.0,
+            presence_penalty=0.0
+        )
 
-    response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt="Resuma e diminua o seguinte texto: " + texto,
-        temperature=0.7,
-        max_tokens=100,
-        top_p=1.0,
-        frequency_penalty=0.0,
-        presence_penalty=0.0
-    )
+        resumo = response.choices[0].text.strip()
+        return "Resumo: " + resumo
+    except openai.error.RateLimitError as error:
+        return "Erro: " + str(error)
 
-    resumo = response.choices[0].text.strip()
-    return resumo
-
-texto_falado = transcrever_fala()
-if texto_falado:
-    resumo = resumir_texto(texto_falado)
-    print("Resumo:", resumo)
+while True:
+    
+    texto_falado = transcrever_fala()
+    if len(texto_falado) > 10:
+        resumo = resumir_texto(texto_falado)
+        print(resumo)
+        break

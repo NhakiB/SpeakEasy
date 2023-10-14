@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+=======
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+>>>>>>> b60f7b892e1b76aab74f488513a0507d2ffad76f
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.0.6</version>
+<<<<<<< HEAD
 		<relativePath/>
+=======
+		<relativePath />
+>>>>>>> b60f7b892e1b76aab74f488513a0507d2ffad76f
 	</parent>
 	<groupId>br.com.fiap</groupId>
 	<artifactId>SpeakEasy</artifactId>
@@ -39,11 +49,18 @@
 		<dependency>
 			<groupId>com.oracle.database.jdbc</groupId>
 			<artifactId>ojdbc8</artifactId>
+<<<<<<< HEAD
 			<version>21.9.0.0</version>
 		</dependency>
 
 
 
+=======
+			<version>19.8.0.0</version>
+		</dependency>
+
+
+>>>>>>> b60f7b892e1b76aab74f488513a0507d2ffad76f
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -127,5 +144,8 @@
 		</plugins>
 	</build>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> b60f7b892e1b76aab74f488513a0507d2ffad76f
 </project>
