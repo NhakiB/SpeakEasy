@@ -2,11 +2,11 @@ package coma.controller;
 
 import java.util.List;
 
-import coma.config.ReuniaoService;
+import coma.service.ReuniaoService;
 import coma.exceptions.RestNotFoundException;
 import coma.models.Reuniao;
 import coma.repository.ReuniaoRepository;
-import coma.repository.UsuarioRepository;
+//import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -23,11 +23,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
-
-import coma.config.UsuarioService;
-import coma.models.Usuario;
-
-@RestController
+/**
+ * Controlador para operações relacionadas a reuniões na API.
+ */
+@RestController(value = "/reuniao")
+//@Tag(name = "Reuniao")
 @RequestMapping("/api/reuniao")
 public class ReuniaoController {
 
@@ -38,7 +38,11 @@ public class ReuniaoController {
 
     @Autowired
     ReuniaoService usuarioService;
-
+    /**
+     * Obtém a lista de todos as reuniões cadastradas.
+     *
+     * @return Lista de reuniões cadastradas
+     */
     @GetMapping()
     public List<Reuniao> show(){
         return reuniaoRepository.findAll();

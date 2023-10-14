@@ -1,17 +1,18 @@
 package coma.models;
 
 import java.time.ZonedDateTime;
+import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+/**
+ * Entidade que representa uma reunião no sistema.
+ */
 @Entity
 @Data
 @NoArgsConstructor
@@ -21,21 +22,18 @@ public class Reuniao {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "O título não pode estar em branco")
     private String titulo;
-
-    private String descricao;
-
     @NotBlank
-    private String duracao;
+    private String descricao;
+    @NotNull(message = "A data não pode estar em branco")
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private Date data;
 
-    @NotNull
-    private ZonedDateTime data;
-
-    private ZonedDateTime dataAlteracao;
-
-
-    private Byte audio;
+    private byte[] audioBytes;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
     @JsonIgnore
     private boolean ativo = true;
     

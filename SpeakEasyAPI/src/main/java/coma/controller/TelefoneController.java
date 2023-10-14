@@ -79,10 +79,11 @@ package coma.controller;
 
 import java.util.List;
 
-import coma.config.TelefoneService;
+import coma.service.TelefoneService;
 import coma.exceptions.RestNotFoundException;
 import coma.models.Telefone;
 import coma.repository.TelefoneRepository;
+//import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -100,9 +101,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 
+/**
+ * Controlador para operações relacionadas a telefones na API.
+ */
 
-
-@RestController
+@RestController(value = "/telefone")
+//@Tag(name = "Telefone")
 @RequestMapping("/api/telefone")
 public class TelefoneController {
 
@@ -113,7 +117,11 @@ public class TelefoneController {
 
     @Autowired
     TelefoneService telefoneService;
-
+    /**
+     * Obtém a lista de todos os telefones cadastrados.
+     *
+     * @return Lista de telefones cadastrados
+     */
     @GetMapping()
     public List<Telefone> show(){
         return telefoneRepository.findAll();

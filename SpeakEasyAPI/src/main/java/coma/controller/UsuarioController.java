@@ -4,6 +4,7 @@ import java.util.List;
 
 import coma.exceptions.RestNotFoundException;
 import coma.repository.UsuarioRepository;
+//import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -21,13 +22,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 
-import coma.config.UsuarioService;
+import coma.service.UsuarioService;
 import coma.models.Usuario;
-
-@RestController
-@RequestMapping("/api/usuarios")
+/**
+ * Controlador para operações relacionadas aos usuários na API.
+ */
+@RestController(value = "/usuario")
+//@Tag(name = "Usuario")
+@RequestMapping("/api/usuario")
 public class UsuarioController {
-    
+
     Logger log = LoggerFactory.getLogger(UsuarioController.class);
 
     @Autowired
@@ -35,12 +39,21 @@ public class UsuarioController {
 
     @Autowired
     UsuarioService usuarioService;
-
+    /**
+     * Obtém a lista de todos os usuários cadastrados.
+     *
+     * @return Lista de usuários cadastrados
+     */
     @GetMapping()
     public List<Usuario> show(){
         return usuarioRepository.findAll();
     }
-
+    /**
+     * Obtém o usuário cadastrado pelo id.
+     *
+     * @param id      ID do usuário a ser pesquisado
+     * @return O id do usuário e informações
+     */
     @GetMapping("{id}")
     public ResponseEntity<Usuario> show(@PathVariable Long id){
         log.info("detalhando usuario com id" + id);
@@ -53,26 +66,32 @@ public class UsuarioController {
         usuarioRepository.save(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
-
+    /**
+     * Atualiza as informações de um usuário existente.
+     *
+     * @param id      ID do usuário a ser atualizado
+     * @param usuario Dados atualizados do usuário
+     * @return O usuário atualizado
+     */
     @PutMapping("{id}")
     public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody @Valid Usuario usuario){
         log.info("atualizando usuario" + id);
-        
+
         getUsuario(id);
-        
+
         usuario.setId(id);
         usuarioRepository.save(usuario);
 
         return ResponseEntity.ok(usuario);
     }
-    
+
     @DeleteMapping("{id}")
     public ResponseEntity<Usuario> destroy(@PathVariable Long id){
         log.info("apagando usuario" + id);
         var usuario = getUsuario(id);
         usuario.setAtivo(false);
         usuarioRepository.save(usuario);
-        return ResponseEntity.noContent().build(); 
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/login")
@@ -84,12 +103,12 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha inválido");
         }
     }
-    
+
     private Usuario getUsuario(Long id) {
         var usuario = usuarioRepository.findById(id).orElseThrow(() -> new RestNotFoundException("Usuario não encontrado"));
         return usuario;
     }
-    
+
 
 
 }

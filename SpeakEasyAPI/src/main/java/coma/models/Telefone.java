@@ -1,15 +1,14 @@
 package coma.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+/**
+ * Entidade que representa um telefone no sistema.
+ */
 @Entity
 @Data
 @NoArgsConstructor
@@ -29,5 +28,8 @@ public class Telefone {
     private int nrTelefone;
     @JsonIgnore
     private boolean ativo = true;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
 }
