@@ -2,16 +2,19 @@ package coma.controller;
 
 import coma.exceptions.RestNotFoundException;
 import coma.models.Resumo;
+import coma.models.Usuario;
 import coma.repository.ResumoRepository;
 import coma.service.ResumoService;
 import coma.service.TranscricaoService;
 //import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,15 +22,14 @@ import java.util.List;
 /**
  * Controlador para operações relacionadas a transcrição e resumo na API.
  */
-@RestController(value = "/resumo")
-//@Tag(name = "Resumo")
-@RequestMapping("/api/resumo")
+@RestController
+@RequestMapping("/api")
 public class TranscricaoResumoController {
-    Logger log = LoggerFactory.getLogger(ReuniaoController.class);
+    Logger log = LoggerFactory.getLogger(TranscricaoResumoController.class);
     private final TranscricaoService transcricaoService;
     private final ResumoService resumoService;
     @Autowired
-    ResumoRepository resumoRepository;
+    private ResumoRepository resumoRepository;
 
     @Autowired
     public TranscricaoResumoController(TranscricaoService transcricaoService, ResumoService resumoService) {
@@ -50,17 +52,17 @@ public class TranscricaoResumoController {
     }
 
     @PostMapping("/resumo")
-    public ResponseEntity<String> realizarResumo(@RequestParam("texto") String textoTranscrito) {
+    @Operation(summary = "Realizar Resumo", description = "Realiza um resumo com base no texto transcrito.")
+    public ResponseEntity<String> realizarResumo(@RequestBody @Valid Resumo resumo) {
         try {
-            String textoResumido = resumoService.resumirTexto(textoTranscrito);
 
-
-
+            String textoResumido = resumoService.resumirTexto(resumo.getTextoTranscrito());
             return ResponseEntity.ok(textoResumido);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao gerar resumo: " + e.getMessage());
         }
     }
+
     /**
      * Obtém a lista de todos os resumos cadastrados.
      *
@@ -71,11 +73,12 @@ public class TranscricaoResumoController {
             return resumoRepository.findAll();
         }
 
-        @GetMapping("{id}")
-        public ResponseEntity<Resumo> show(@PathVariable Long id){
-            log.info("detalhando Resumo com id" + id);
-            return ResponseEntity.ok(getResumo(id));
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<Resumo> getResumoById(@PathVariable String id) {
+        log.info("Detalhando Resumo com id " + id);
+        return ResponseEntity.ok(getResumo(id));
+    }
+
 
     /**
      * Atualiza as informações de um resumo existente.
@@ -86,7 +89,7 @@ public class TranscricaoResumoController {
      */
 
         @PutMapping("{id}/resumo")
-        public ResponseEntity<Resumo> update(@PathVariable Long id, @RequestBody @Valid Resumo resumo){
+        public ResponseEntity<Resumo> update(@PathVariable String id, @RequestBody @Valid Resumo resumo){
             log.info("atualizando resumo" + id);
 
             getResumo(id);
@@ -98,18 +101,17 @@ public class TranscricaoResumoController {
         }
 
         @DeleteMapping("{id}")
-        public ResponseEntity<Resumo> destroy(@PathVariable Long id){
+        public ResponseEntity<Resumo> destroy(@PathVariable String id){
             log.info("apagando resumo" + id);
             var resumo = getResumo(id);
-            resumo.setAtivo(false);
             resumoRepository.save(resumo);
             return ResponseEntity.noContent().build();
         }
 
 
 
-        private Resumo getResumo(Long id) {
-            var resumo = resumoRepository.findById(id).orElseThrow(() -> new RestNotFoundException("resumo não encontrada"));
+        private Resumo getResumo(String id) {
+            var resumo = resumoRepository.findById(id).orElseThrow(() -> new RestNotFoundException("resumo não encontrado"));
             return resumo;
         }
 

@@ -1,5 +1,7 @@
 package coma.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import coma.models.Resumo;
 import coma.repository.ResumoRepository;
 import okhttp3.*;
@@ -10,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import java.io.IOException;
 import java.util.Optional;
@@ -27,27 +29,37 @@ public class ResumoService {
     public ResumoService(ResumoRepository resumoRepository) {
         this.resumoRepository = resumoRepository;
     }
+
     public String resumirTexto(String textoTranscrito) throws IOException {
         MediaType mediaType = MediaType.parse("application/json");
 
+        String apiKey = "sua_chave_de_api_aqui";
+        String url = "https://api.openai.com/v1/engines/davinci/completions";
+
+        // Modificado para incluir o pedido de resumo no prompt
         String json = "{\n" +
-                "    \"prompt\": \"" + textoTranscrito + "\",\n" +
+                "    \"prompt\": \"Resuma o seguinte texto: " + textoTranscrito + "\",\n" +
+
+
                 "    \"max_tokens\": 50\n" +
                 "}";
 
         RequestBody body = RequestBody.create(mediaType, json);
 
-        String apiKey = "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";
         Request request = new Request.Builder()
                 .url("https://api.openai.com/v1/engines/davinci/completions")
                 .method("POST", body)
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Authorization", "Bearer " + apiKey)
-                .build();
+                .addHeader("Autorização", "Bearer " + apiKey) .build();
+
+        // Adiciona um log informativo antes de enviar a solicitação
+        logger.info("Enviando solicitação para resumir texto: {}", json);
 
         try (Response response = client.newCall(request).execute()) {
             if (response.isSuccessful()) {
-                return response.body().string();
+                String textoResumido = extrairTextoResumido(response.body().string());
+                salvarResumo(textoTranscrito, textoResumido);
+                return textoResumido;
             } else {
                 throw new RuntimeException("Erro ao resumir texto. Código de resposta: " + response.code() +
                         ", Mensagem: " + response.message());
@@ -55,44 +67,38 @@ public class ResumoService {
         } catch (IOException e) {
             // Log de erro
             logger.error("Erro ao gerar resumo: {}", e.getMessage());
-
-        }
-        return json;
-
-    }
-    /**
-     * Obtém um resumo pelo seu ID.
-     *
-     * @param id ID do resumo a ser obtido
-     * @return O resumo com o ID especificado
-     * @throws Exception Se o resumo não for encontrado
-     */
-    @Cacheable(value = "resumoCache", key = "id")
-    @Transactional(readOnly = true)
-    public Resumo obterResumo(Long id) throws Exception {
-        Optional<Resumo> resumoOptional = resumoRepository.findById(id);
-        if (resumoOptional.isPresent()) {
-            return resumoOptional.get();
-        } else {
-            throw new Exception("Resumo não encontrado com o id: " + id);
+            throw e;
         }
     }
-    @Async
-    @Transactional
 
-    public boolean resumoValida(String textoResumido) {
-        Resumo resumo = resumoRepository.findBytextoResumido(textoResumido) ;
-        if (resumo == null) {
-            return false;
-        }
-        else if (resumo.getTextoTranscrito() == textoResumido){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
+    private String extrairTextoResumido(String respostaAPI) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(respostaAPI);
+
+            // Supondo que a resposta tenha uma chave "choices" e o texto resumido esteja em "text"
+            if (jsonNode.has("choices")) {
+                JsonNode choicesNode = jsonNode.get("choices");
+
+                // Verificando se há pelo menos uma escolha
+                if (choicesNode.isArray() && choicesNode.size() > 0) {
+                    JsonNode primeiraEscolha = choicesNode.get(0);
+
+                    // Verificando se a escolha tem o campo "text"
+                    if (primeiraEscolha.has("text")) {
+                        return primeiraEscolha.get("text").asText();
+                    }
+                }
+            }return "Texto resumido não encontrado na resposta da API.";
+                    } catch (IOException e) {
+                    logger.error("Erro ao extrair texto resumido: {}", e.getMessage());
+                    return "Erro ao extrair texto resumido.";
+                    }
+                    }
+
     public void salvarResumo(String textoTranscrito, String textoResumido) {
+
+
         Resumo resumo = new Resumo();
         resumo.setTextoTranscrito(textoTranscrito);
         resumo.setTextoResumido(textoResumido);

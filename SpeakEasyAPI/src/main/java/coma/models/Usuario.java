@@ -19,27 +19,23 @@ import java.util.List;
 public class Usuario {
 
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "usuario_seq", sequenceName = "USUARIO_SEQ", allocationSize = 1)
+    private String id;
+    private String nome;
     @Email
-    @NotBlank(message = "Insira um email válido")
     private String email;
-
-    @NotBlank(message = "Insira uma senha válida")
     private String senha;
 
-    @NotBlank
-    private String nome;
 
-    @NotBlank
-    private String pais;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private List<Telefone> telefones;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private List<Reuniao> reunioes;
+
+
+
     @JsonIgnore
     private boolean ativo = true;
 
-    
+
+    public Usuario(String nome, String email, String senha) {
+    }
 }

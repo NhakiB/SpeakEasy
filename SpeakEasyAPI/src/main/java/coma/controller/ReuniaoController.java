@@ -1,94 +1,112 @@
 package coma.controller;
 
-import java.util.List;
-
-import coma.service.ReuniaoService;
-import coma.exceptions.RestNotFoundException;
+import coma.models.Participante;
 import coma.models.Reuniao;
+import coma.repository.ParticipanteRepository;
 import coma.repository.ReuniaoRepository;
-//import io.swagger.v3.oas.annotations.tags.Tag;
+import coma.service.ReuniaoService;
+import coma.service.UsuarioService;
+import coma.models.Usuario;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
-/**
- * Controlador para operações relacionadas a reuniões na API.
- */
-@RestController(value = "/reuniao")
-//@Tag(name = "Reuniao")
+
+import java.util.List;
+
+@RestController
 @RequestMapping("/api/reuniao")
 public class ReuniaoController {
 
-    Logger log = LoggerFactory.getLogger(ReuniaoController.class);
+    private final Logger log = LoggerFactory.getLogger(ReuniaoController.class);
+
+    private final ReuniaoRepository reuniaoRepository;
+    private final ReuniaoService reuniaoService;
+    private final UsuarioService usuarioService;
+    private final ParticipanteRepository participanteRepository;
 
     @Autowired
-    ReuniaoRepository reuniaoRepository;
+    public ReuniaoController(ReuniaoRepository reuniaoRepository, ReuniaoService reuniaoService,
+                             UsuarioService usuarioService, ParticipanteRepository participanteRepository) {
+        this.reuniaoRepository = reuniaoRepository;
+        this.reuniaoService = reuniaoService;
+        this.usuarioService = usuarioService;
+        this.participanteRepository = participanteRepository;
+    }
 
-    @Autowired
-    ReuniaoService usuarioService;
-    /**
-     * Obtém a lista de todos as reuniões cadastradas.
-     *
-     * @return Lista de reuniões cadastradas
-     */
-    @GetMapping()
-    public List<Reuniao> show(){
+    @GetMapping
+    public List<Reuniao> getAllReunioes() {
         return reuniaoRepository.findAll();
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Reuniao> show(@PathVariable Long id){
-        log.info("detalhando reuniao com id" + id);
-        return ResponseEntity.ok(getReuniao(id));
+    @GetMapping("/{id}")
+    public ResponseEntity<Reuniao> getReuniaoById(@PathVariable String id) {
+        log.info("Detalhando reunião com id: {}", id);
+
+        return reuniaoRepository.findById(id)
+                .map(reuniao -> new ResponseEntity<>(reuniao, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping()
-    public ResponseEntity<Reuniao> create(@RequestBody @Valid Reuniao reuniao, BindingResult result){
-        log.info("cadastrando reuniao" + reuniao);
-        reuniaoRepository.save(reuniao);
-        return ResponseEntity.status(HttpStatus.CREATED).body(reuniao);
+    @PostMapping
+    public ResponseEntity<Reuniao> createReuniao(@Valid @RequestBody Reuniao reuniao) {
+        log.info("Cadastrando reunião: {}", reuniao);
+
+        reuniao = reuniaoRepository.save(reuniao);
+        return new ResponseEntity<>(reuniao, HttpStatus.CREATED);
     }
 
-    @PutMapping("{id}/reuniao")
-    public ResponseEntity<Reuniao> update(@PathVariable Long id, @RequestBody @Valid Reuniao reuniao){
-        log.info("atualizando reuniao" + id);
+    @PutMapping("/{id}")
+    public ResponseEntity<Reuniao> updateReuniao(@PathVariable("id") String id, @RequestBody Reuniao reuniao) {
+        log.info("Atualizando reunião com id: {}", id);
 
-        getReuniao(id);
-
-        reuniao.setId(id);
-        reuniaoRepository.save(reuniao);
-
-        return ResponseEntity.ok(reuniao);
+        return reuniaoRepository.findById(id)
+                .map(existingReuniao -> {
+                    existingReuniao.setTitulo(reuniao.getTitulo());
+                    existingReuniao.setDescricao(reuniao.getDescricao());
+                    existingReuniao.setData(reuniao.getData());
+                    return new ResponseEntity<>(reuniaoRepository.save(existingReuniao), HttpStatus.OK);
+                })
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<Reuniao> destroy(@PathVariable Long id){
-        log.info("apagando reuniao" + id);
-        var reuniao = getReuniao(id);
-        reuniao.setAtivo(false);
-        reuniaoRepository.save(reuniao);
-        return ResponseEntity.noContent().build();
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteReuniao(@PathVariable("id") String id) {
+        log.info("Apagando reunião com id: {}", id);
+
+        return reuniaoRepository.findById(id)
+                .map(reuniao -> {
+                    reuniaoRepository.delete(reuniao);
+                    return ResponseEntity.noContent().build();
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-
-
-    private Reuniao getReuniao(Long id) {
-        var reuniao = reuniaoRepository.findById(id).orElseThrow(() -> new RestNotFoundException("reuniao não encontrada"));
-        return reuniao;
-    }
-
-
-
+//    @PostMapping("/{reuniaoId}/participantes/{usuarioId}")
+//    public ResponseEntity<String> adicionarParticipante(@PathVariable String reuniaoId, @PathVariable String usuarioId) {
+//        Reuniao reuniao = reuniaoService.getReuniaoById(reuniaoId);
+//        Usuario usuario = usuarioService.obterUsuario(usuarioId);
+//
+//        Participante participante = new Participante();
+//        participante.setReuniao(reuniao);
+//        participante.setUsuario(usuario);
+//
+//        participanteRepository.save(participante);
+//
+//        return ResponseEntity.ok("Participante adicionado com sucesso.");
+//    }
+//
+//    @GetMapping("/{reuniaoId}/participantes")
+//    public ResponseEntity<List<Participante>> listarParticipantes(@PathVariable String email) {
+//        Reuniao reuniao = reuniaoService.obterReuniaobyId(email);
+//        List<Participante> participantes = participanteRepository.findByEmail(email);
+//        return new ResponseEntity<>(participantes, HttpStatus.OK);
+//    }
+//}
 }

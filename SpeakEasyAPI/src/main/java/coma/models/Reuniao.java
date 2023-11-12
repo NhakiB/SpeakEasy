@@ -1,40 +1,44 @@
 package coma.models;
 
-import java.time.ZonedDateTime;
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Entidade que representa uma reunião no sistema.
  */
 @Entity
 @Data
 @NoArgsConstructor
-
 public class Reuniao {
-    
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @NotBlank(message = "O título não pode estar em branco")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
     private String titulo;
-    @NotBlank
     private String descricao;
-    @NotNull(message = "A data não pode estar em branco")
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private Date data;
-
-    private byte[] audioBytes;
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    private LocalDateTime data;
+    @Lob
+    private byte[] audioFile;
     @JsonIgnore
     private boolean ativo = true;
-    
+    @ManyToOne
+    @JoinColumn(name = "organizador_id")
+    private Usuario organizador;
+
+    @OneToMany(mappedBy = "reuniao", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Participante> participantes = new ArrayList<>();
+
+
+    public Reuniao(String titulo, String descricao, LocalDateTime data) {
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.data = data;
+    }
 }

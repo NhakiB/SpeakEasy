@@ -1,31 +1,59 @@
 package coma.config;
-
-//import io.swagger.v3.oas.annotations.security.SecurityScheme;
-//import io.swagger.v3.oas.models.Components;
-//import io.swagger.v3.oas.models.OpenAPI;
-//import io.swagger.v3.oas.models.info.Info;
-//import io.swagger.v3.oas.models.security.SecurityRequirement;
-//import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-/**
- * Configuração do Swagger para documentação da API.
- */
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.*;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
+import springfox.documentation.spring.web.plugins.Docket;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 @Configuration
 public class SwaggerConfig {
 
-//
-//    @Bean
-//    public OpenAPI customOpenAPI() {
-//        return new OpenAPI()
-//                .components(new Components()
-//                        .addSecuritySchemes("bearer-key", new SecurityScheme()
-//                                .type(SecurityScheme.Type.HTTP)
-//                                .scheme("bearer")
-//                                .bearerFormat("JWT")))
-//                .addSecurityItem(new SecurityRequirement().addList("bearer-key"))
-//                .info(new Info()
-//                        .title("SpeakEasy")
-//                        .version("1.0")
-//                        .description("Sua ata gerada automaticamente."));;
-//    }
+    public static final String AUTHORIZATION_HEADER = "Authorization";
+
+    private ApiKey apiKey(){
+        return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
+    }
+
+    private ApiInfo apiInfo(){
+        return new ApiInfo(
+                "SpeakEasy API",
+                "SpeakEasy REST API Documentação",
+                "1",
+                "Terms of service",
+                new Contact("Devall", "www.javaguides.net", "devall@gmail.com"),
+                "License of API",
+                "API license URL",
+                Collections.emptyList()
+        );
+    }
+
+    @Bean
+    public Docket api(){
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .securityContexts(Arrays.asList(securityContext()))
+                .securitySchemes(Arrays.asList(apiKey()))
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build();
+    }
+
+    private SecurityContext securityContext(){
+        return SecurityContext.builder().securityReferences(defaultAuth()).build();
+    }
+
+    private List<SecurityReference> defaultAuth(){
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Arrays.asList(new SecurityReference("JWT", authorizationScopes));
+    }
 }

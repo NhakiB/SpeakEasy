@@ -4,7 +4,7 @@ import coma.models.Usuario;
 /**
  * Repositório para operações relacionadas aos usuários no banco de dados.
  */
-public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
+public interface UsuarioRepository extends JpaRepository<Usuario, String>{
 
     /**
      * função para encontrar um usuário pelo email no banco de dados..
