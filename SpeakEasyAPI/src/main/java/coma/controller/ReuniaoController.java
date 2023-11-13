@@ -11,14 +11,18 @@ import coma.models.Usuario;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/api/reuniao")
@@ -40,11 +44,22 @@ public class ReuniaoController {
         this.participanteRepository = participanteRepository;
     }
 
+    /**
+     * Obtém todas as reuniões.
+     *
+     * @return Lista de todas as reuniões
+     */
     @GetMapping
+    @Cacheable(value = "reunioesCache")
     public List<Reuniao> getAllReunioes() {
         return reuniaoRepository.findAll();
     }
-
+    /**
+     * Obtém uma reunião pelo ID.
+     *
+     * @param id ID da reunião
+     * @return ResponseEntity contendo a reunião ou NOT_FOUND se não encontrado
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Reuniao> getReuniaoById(@PathVariable String id) {
         log.info("Detalhando reunião com id: {}", id);
@@ -53,7 +68,12 @@ public class ReuniaoController {
                 .map(reuniao -> new ResponseEntity<>(reuniao, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
+    /**
+     * Cria uma nova reunião.
+     *
+     * @param reuniao Dados da nova reunião
+     * @return ResponseEntity contendo a reunião recém-criada
+     */
     @PostMapping
     public ResponseEntity<Reuniao> createReuniao(@Valid @RequestBody Reuniao reuniao) {
         log.info("Cadastrando reunião: {}", reuniao);
@@ -61,8 +81,15 @@ public class ReuniaoController {
         reuniao = reuniaoRepository.save(reuniao);
         return new ResponseEntity<>(reuniao, HttpStatus.CREATED);
     }
-
+    /**
+     * Atualiza uma reunião existente pelo ID.
+     *
+     * @param id      ID da reunião a ser atualizada
+     * @param reuniao Dados atualizados da reunião
+     * @return ResponseEntity contendo a reunião atualizada ou NOT_FOUND se não encontrada
+     */
     @PutMapping("/{id}")
+    @Transactional
     public ResponseEntity<Reuniao> updateReuniao(@PathVariable("id") String id, @RequestBody Reuniao reuniao) {
         log.info("Atualizando reunião com id: {}", id);
 
@@ -75,8 +102,14 @@ public class ReuniaoController {
                 })
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
+    /**
+     * Exclui uma reunião pelo ID.
+     *
+     * @param id ID da reunião a ser excluída
+     * @return ResponseEntity sem conteúdo se excluída com sucesso ou NOT_FOUND se não encontrada
+     */
     @DeleteMapping("/{id}")
+    @Transactional
     public ResponseEntity<?> deleteReuniao(@PathVariable("id") String id) {
         log.info("Apagando reunião com id: {}", id);
 
@@ -88,25 +121,35 @@ public class ReuniaoController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-//    @PostMapping("/{reuniaoId}/participantes/{usuarioId}")
-//    public ResponseEntity<String> adicionarParticipante(@PathVariable String reuniaoId, @PathVariable String usuarioId) {
-//        Reuniao reuniao = reuniaoService.getReuniaoById(reuniaoId);
-//        Usuario usuario = usuarioService.obterUsuario(usuarioId);
-//
-//        Participante participante = new Participante();
-//        participante.setReuniao(reuniao);
-//        participante.setUsuario(usuario);
-//
-//        participanteRepository.save(participante);
-//
-//        return ResponseEntity.ok("Participante adicionado com sucesso.");
-//    }
-//
-//    @GetMapping("/{reuniaoId}/participantes")
-//    public ResponseEntity<List<Participante>> listarParticipantes(@PathVariable String email) {
-//        Reuniao reuniao = reuniaoService.obterReuniaobyId(email);
-//        List<Participante> participantes = participanteRepository.findByEmail(email);
-//        return new ResponseEntity<>(participantes, HttpStatus.OK);
-//    }
-//}
+    /**
+     * Cadastra um novo participante.
+     *
+     * @param participante Dados do novo participante
+     * @return ResponseEntity contendo o participante recém-cadastrado
+     */
+    @PostMapping("/participante")
+    public ResponseEntity<Participante> addParticipante(@Valid @RequestBody Participante participante) {
+        log.info("Cadastrando participante: {}", participante);
+
+        participante = participanteRepository.save(participante);
+        return new ResponseEntity<>(participante, HttpStatus.CREATED);
+    }
+
+    /**
+     * Obtém um participante pelo ID.
+     *
+     * @param id ID do participante
+     * @return ResponseEntity contendo o participante ou NOT_FOUND se não encontrado
+     */
+    @GetMapping("/participante/{id}")
+    @Async
+
+    public ResponseEntity<Participante> getParticipanteById(@PathVariable String id) {
+        log.info("Detalhando participante com id: {}", id);
+
+        return participanteRepository.findById(id)
+                .map(participante -> new ResponseEntity<>(participante, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
 }

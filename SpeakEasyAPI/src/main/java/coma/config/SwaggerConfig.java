@@ -1,6 +1,7 @@
 package coma.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.*;
@@ -13,14 +14,19 @@ import java.util.Collections;
 import java.util.List;
 
 @Configuration
+@Profile("!prod")
 public class SwaggerConfig {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
-
+    /**
+     * Configuração da chave de autenticação JWT.
+     */
     private ApiKey apiKey(){
         return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
     }
-
+    /**
+     * Configuração das informações da API para a interface do Swagger.
+     */
     private ApiInfo apiInfo(){
         return new ApiInfo(
                 "SpeakEasy API",
@@ -34,6 +40,9 @@ public class SwaggerConfig {
         );
     }
 
+    /**
+     * Configuração do Docket (Swagger) para a API.
+     */
     @Bean
     public Docket api(){
         return new Docket(DocumentationType.SWAGGER_2)
@@ -45,11 +54,15 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build();
     }
-
+    /**
+     * Configuração do contexto de segurança para o Swagger.
+     */
     private SecurityContext securityContext(){
         return SecurityContext.builder().securityReferences(defaultAuth()).build();
     }
-
+    /**
+     * Configuração das referências de segurança padrão para o Swagger.
+     */
     private List<SecurityReference> defaultAuth(){
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];

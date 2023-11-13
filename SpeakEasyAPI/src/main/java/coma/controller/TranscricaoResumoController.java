@@ -12,8 +12,11 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,8 +39,14 @@ public class TranscricaoResumoController {
         this.transcricaoService = transcricaoService;
         this.resumoService = resumoService;
     }
-
+    /**
+     * Realiza a transcrição de um arquivo de áudio.
+     *
+     * @param audioFile Arquivo de áudio a ser transcrito
+     * @return ResponseEntity contendo o texto transcrito ou um status de erro
+     */
     @PostMapping("/transcricao")
+    @Async
     public ResponseEntity<String> realizarTranscricao(@RequestParam("audio") MultipartFile audioFile) {
         try {
             byte[] audioBytes = audioFile.getBytes();
@@ -50,12 +59,18 @@ public class TranscricaoResumoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro na transcrição de áudio: " + e.getMessage());
         }
     }
-
+    /**
+     * Realiza um resumo com base no texto transcrito.
+     *
+     * @param resumo Objeto Resumo contendo o texto transcrito
+     * @return ResponseEntity contendo o texto resumido ou um status de erro
+     */
     @PostMapping("/resumo")
     @Operation(summary = "Realizar Resumo", description = "Realiza um resumo com base no texto transcrito.")
+    @Transactional
     public ResponseEntity<String> realizarResumo(@RequestBody @Valid Resumo resumo) {
         try {
-
+            // Use resumo.getTextoTranscrito() ou algo semelhante, dependendo da estrutura do Resumo
             String textoResumido = resumoService.resumirTexto(resumo.getTextoTranscrito());
             return ResponseEntity.ok(textoResumido);
         } catch (Exception e) {
@@ -69,6 +84,7 @@ public class TranscricaoResumoController {
      * @return Lista de resumos cadastrados
      */
         @GetMapping()
+        @Cacheable(value = "resumosCache")
         public List<Resumo> show(){
             return resumoRepository.findAll();
         }
@@ -89,6 +105,7 @@ public class TranscricaoResumoController {
      */
 
         @PutMapping("{id}/resumo")
+        @Transactional
         public ResponseEntity<Resumo> update(@PathVariable String id, @RequestBody @Valid Resumo resumo){
             log.info("atualizando resumo" + id);
 
@@ -99,8 +116,14 @@ public class TranscricaoResumoController {
 
             return ResponseEntity.ok(resumo);
         }
-
+    /**
+     * Exclui um resumo pelo ID.
+     *
+     * @param id ID do resumo a ser excluído
+     * @return ResponseEntity sem conteúdo se excluído com sucesso ou NOT_FOUND se não encontrado
+     */
         @DeleteMapping("{id}")
+        @Transactional
         public ResponseEntity<Resumo> destroy(@PathVariable String id){
             log.info("apagando resumo" + id);
             var resumo = getResumo(id);
